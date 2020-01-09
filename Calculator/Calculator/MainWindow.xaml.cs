@@ -45,7 +45,7 @@ namespace Calculator
 
             if(result==true)
             {
-                if(string.IsNullOrEmpty(action))
+                if(string.IsNullOrWhiteSpace(action))
                 {
                     leftValue += s;
                 }
@@ -58,6 +58,7 @@ namespace Calculator
             {
                     Action();
                     textblock.Text = leftValue;
+                    rightValue = "";
                     action = "";
             }
             else if(s=="CLEAR")
@@ -67,7 +68,13 @@ namespace Calculator
                 action = "";
                 textblock.Text = "";
             }
-            else 
+            else if(!string.IsNullOrWhiteSpace(action))
+            {
+                Action();
+                action = s;
+                rightValue = "";
+            }
+            else
             {
                 action = s;
             }
