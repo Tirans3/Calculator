@@ -21,6 +21,8 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
+
+        <TextBlock x:Name="textblock" Grid.Column="0" Grid.ColumnSpan="4"></TextBlock>
         
     </Grid>
 </Window>
