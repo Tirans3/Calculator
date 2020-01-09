@@ -15,14 +15,83 @@ using System.Windows.Shapes;
 
 namespace Calculator
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
+        private  string leftValue = "";
+
+        private  string rightValue = "";
+
+        private  string action = "";
+
         public MainWindow()
         {
             InitializeComponent();
+
+            foreach(UIElement button in Root.Children)
+            {
+                if (button is Button) ((Button)button).Click += Button_Click;
+            }
+        }
+
+        private void Button_Click(object sender,RoutedEventArgs e)
+        {
+            string s = ((Button)e.OriginalSource).Content.ToString();
+
+            textblock.Text += s;
+
+            int num;
+
+            bool result = int.TryParse(s, out num);
+
+            if(result==true)
+            {
+                if(string.IsNullOrEmpty(action))
+                {
+                    leftValue += s;
+                }
+                else
+                {
+                    rightValue += s;
+                }
+            }
+            else if(s == "=")
+            {
+                    Action();
+                    textblock.Text = leftValue;
+                    action = "";
+            }
+            else if(s=="CLEAR")
+            {
+                leftValue = "";
+                rightValue = "";
+                action = "";
+                textblock.Text = "";
+            }
+            else 
+            {
+                action = s;
+            }
+            
+        }
+
+        private void Action()
+        {
+            int left = int.Parse(leftValue);
+
+            int right = int.Parse(rightValue);
+
+            switch(action)
+            {
+                case "+":leftValue = (left + right).ToString();
+                    break;
+                case "-":leftValue = (left - right).ToString();
+                    break;
+                case "*":leftValue = (left * right).ToString();
+                    break;
+                case "/":leftValue = (left / right).ToString();
+                    break;
+            }
+
         }
     }
 }
